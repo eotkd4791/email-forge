@@ -6,25 +6,31 @@ export class SESService {
   private readonly sesClient = new SESClient({ region: process.env.AWS_REGION });
 
   async sendMail(to: string, subject: string, html: string) {
-    await this.sesClient.send(
-      new SendEmailCommand({
-        Source: process.env.AWS_SES_SOURCE_EMAIL,
-        Destination: {
-          ToAddresses: [to],
-        },
-        Message: {
-          Subject: {
-            Charset: 'UTF-8',
-            Data: subject,
+    try {
+      const response = await this.sesClient.send(
+        new SendEmailCommand({
+          Source: process.env.SENDER_EMAIL,
+          Destination: {
+            ToAddresses: [to],
           },
-          Body: {
-            Html: {
+          Message: {
+            Subject: {
               Charset: 'UTF-8',
-              Data: html,
+              Data: subject,
+            },
+            Body: {
+              Html: {
+                Charset: 'UTF-8',
+                Data: html,
+              },
             },
           },
-        },
-      }),
-    );
+        }),
+      );
+      return response;
+    } catch (error) {
+      console.error('Failed to send email:', error);
+      throw error;
+    }
   }
 }
