@@ -1,4 +1,13 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
+import { EmailService } from './email.service';
 
 @Controller('email')
-export class EmailController {}
+export class EmailController {
+  constructor(private readonly emailService: EmailService) {}
+
+  @Post('send')
+  async sendEmail(@Body() { to, name }: { to: string; name: string }) {
+    await this.emailService.enqueueWelcomeEmail(to, name);
+    return { success: true };
+  }
+}
