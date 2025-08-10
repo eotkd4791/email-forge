@@ -2,7 +2,7 @@ import { Processor, Process } from '@nestjs/bull';
 import { Job } from 'bullmq';
 import { renderEmail } from '../libs/email-renderer';
 import WelcomeEmail from '../templates/WelcomeEmail';
-import { type MailSender } from '../mail-sender/mail-sender.interface';
+import { type MailSender } from '../mail-sender/providers/mail-sender.interface';
 import { Inject } from '@nestjs/common';
 
 @Processor('email')

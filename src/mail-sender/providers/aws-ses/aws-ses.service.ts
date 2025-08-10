@@ -1,9 +1,9 @@
 import { SendEmailCommand, SESClient } from '@aws-sdk/client-ses';
 import { Injectable } from '@nestjs/common';
-import { MailSender, MailSenderParams } from './mail-sender.interface';
+import { MailSender, MailSenderParams } from '../mail-sender.interface';
 
 @Injectable()
-export class MailSenderService implements MailSender {
+export class AWSSESService implements MailSender {
   private readonly client = new SESClient({ region: process.env.AWS_REGION });
 
   async sendEmail({ to, subject, html, sender }: MailSenderParams) {
