@@ -1,0 +1,19 @@
+groups:
+  - name: email-forge:recordings
+    interval: 30s
+    rules:
+      - record: job:http_error_rate_5m
+        expr: |
+          sum(rate(http_requests_total{status=~"5.."}[5m]))
+          /
+          sum(rate(http_requests_total[5m]))
+      - record: job:email_send_rate_1m
+        expr: sum by (campaign_id,provider) (rate(email_sent_total[1m]))
+      - record: job:email_fail_rate_1m
+        expr: sum by (campaign_id,provider,reason) (rate(email_failed_total[1m]))
+      - record: job:queue_wait_p95
+        expr: |
+          histogram_quantile(0.95, sum by (le,queue) (rate(email_queue_wait_seconds_bucket[5m])))
+      - record: job:proc_p95
+        expr: |
+          histogram_quantile(0.95, sum by (le,queue) (rate(email_processing_duration_seconds_bucket[5m])))

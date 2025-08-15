@@ -4,10 +4,11 @@ import { AppService } from './app.service';
 import { QueueModule } from './queue/queue.module';
 import { EmailModule } from './email/email.module';
 import { MailSenderModule } from './mail-sender/mail-sender.module';
+import { MetricsModule } from './metrics/metrics.module';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [ConfigModule.forRoot(), QueueModule, EmailModule, MailSenderModule],
+  imports: [ConfigModule.forRoot(), QueueModule, EmailModule, MailSenderModule, MetricsModule],
   controllers: [AppController],
   providers: [AppService],
 })

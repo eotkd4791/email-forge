@@ -1,0 +1,42 @@
+groups:
+  - name: email-forge:alerts
+    rules:
+      - alert: HighErrorRate
+        expr: job:http_error_rate_5m > 0.05
+        for: 5m
+        labels: { severity: page }
+        annotations:
+          summary: 'HTTP 5xx > 5% (5m)'
+          desc: '에러율이 5% 초과 (최근 5분)'
+
+      - alert: QueueBacklog
+        expr: email_queue_size{queue="send"} > 10000
+        for: 10m
+        labels: { severity: ticket }
+        annotations:
+          summary: 'Send 큐 적체 > 10k'
+          desc: '워커 증설 또는 병목 점검 필요'
+
+      - alert: LatencyP95Spike
+        expr: job:proc_p95 > 5
+        for: 10m
+        labels: { severity: ticket }
+        annotations:
+          summary: '처리 p95 > 5s (10m)'
+          desc: '렌더/프로바이더 응답 지연 가능'
+
+      - alert: WorkerDown
+        expr: absent(worker_heartbeat)
+        for: 2m
+        labels: { severity: page }
+        annotations:
+          summary: '워커 하트비트 없음'
+          desc: '워커 프로세스 다운 또는 스크래핑 실패'
+
+      - alert: ProviderErrors
+        expr: sum(rate(email_failed_total{reason=~"throttled|rejected|timeout"}[5m])) > 10
+        for: 5m
+        labels: { severity: ticket }
+        annotations:
+          summary: '프로바이더 오류 급증'
+          desc: 'SES 한도/SMTP 실패. 재시도/스로틀링 조정 필요'
