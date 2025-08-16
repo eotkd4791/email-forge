@@ -4,6 +4,7 @@ import { Queue } from 'bullmq';
 import { SendDiscountEventDto } from './dto/send-discount-event.dto';
 import { SendEmailVerificationDto } from './dto/send-email-verification.dto';
 import { SendIdentityVerificationExpiredDto } from './dto/send-identity-verification-expired.dto';
+import { SendPrivacyPolicyUpdateDto } from './dto/send-privacy-policy-update.dto';
 
 @Injectable()
 export class EmailService {
@@ -42,5 +43,18 @@ export class EmailService {
       subject: dto.subject,
       verificationLink: dto.verificationLink,
     });
+  }
+
+  async enqueuePrivacyPolicyUpdateEmails(dto: SendPrivacyPolicyUpdateDto) {
+    const jobs = dto.users.map(user => ({
+      name: 'sendPrivacyPolicyUpdate',
+      data: {
+        to: user.email,
+        name: user.name,
+        subject: dto.subject,
+        policyLink: dto.policyLink,
+      },
+    }));
+    await this.emailQueue.addBulk(jobs);
   }
 }

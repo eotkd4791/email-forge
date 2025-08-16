@@ -9,6 +9,7 @@ import WelcomeEmail from '../templates/WelcomeEmail';
 import DiscountEvent from '../templates/DiscountEvent';
 import EmailVerification from '../templates/EmailVerification';
 import IdentityVerificationExpired from '../templates/IdentityVerificationExpired';
+import PrivacyPolicyUpdate from '../templates/PrivacyPolicyUpdate';
 
 @Processor('email')
 export class EmailProcessor {
@@ -71,6 +72,22 @@ export class EmailProcessor {
     const html = await renderEmail({
       template: IdentityVerificationExpired,
       props: { name, verificationLink },
+    });
+
+    await this.mailSender.sendEmail({
+      to,
+      subject,
+      html,
+      sender: this.senderEmail,
+    });
+  }
+
+  @Process('sendPrivacyPolicyUpdate')
+  async handlePrivacyPolicyUpdate(job: Job<{ to: string; name: string; subject: string; policyLink: string }>) {
+    const { to, name, subject, policyLink } = job.data;
+    const html = await renderEmail({
+      template: PrivacyPolicyUpdate,
+      props: { name, policyLink },
     });
 
     await this.mailSender.sendEmail({
