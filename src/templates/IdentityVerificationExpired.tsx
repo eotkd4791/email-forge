@@ -11,8 +11,8 @@ const IdentityVerificationExpired = ({ name, verificationLink }: IdentityVerific
     <Head />
     <Preview>중요: 신원 인증을 갱신해야 합니다</Preview>
     <Tailwind>
-      <Body className="bg-white my-auto mx-auto font-sans">
-        <Container className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] w-[465px]">
+      <Body className="bg-white my-auto mx-auto font-sans px-[10px]">
+        <Container className="border border-solid border-[#eaeaea] my-[40px] mx-auto p-[20px] w-full max-w-[465px]">
           <Heading className="text-black text-[24px] font-normal text-center p-0 my-[30px] mx-0">
             신원 인증이 만료되었습니다
           </Heading>
@@ -30,7 +30,7 @@ const IdentityVerificationExpired = ({ name, verificationLink }: IdentityVerific
           <Text className="text-black text-[14px] leading-[24px]">
             버튼이 작동하지 않으면, 다음 링크를 클릭하세요.
             <br />
-            <a href={verificationLink} className="text-blue-600 no-underline">
+            <a href={verificationLink} className="text-blue-600">
               {verificationLink}
             </a>
           </Text>

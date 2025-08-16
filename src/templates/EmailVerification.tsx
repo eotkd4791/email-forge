@@ -11,8 +11,8 @@ const EmailVerification = ({ name, verificationLink }: EmailVerificationProps) =
     <Head />
     <Preview>이메일을 인증하고 모든 기능을 이용해 보세요</Preview>
     <Tailwind>
-      <Body className="bg-white my-auto mx-auto font-sans">
-        <Container className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] w-[465px]">
+      <Body className="bg-white my-auto mx-auto font-sans px-[10px]">
+        <Container className="border border-solid border-[#eaeaea] my-[40px] mx-auto p-[20px] w-full max-w-[465px]">
           <Heading className="text-black text-[24px] font-normal text-center p-0 my-[30px] mx-0">
             이메일 주소를 인증해주세요
           </Heading>
@@ -26,7 +26,7 @@ const EmailVerification = ({ name, verificationLink }: EmailVerificationProps) =
           <Text className="text-black text-[14px] leading-[24px]">
             또는 다음 링크를 클릭하세요.
             <br />
-            <a href={verificationLink} className="text-blue-600 no-underline">
+            <a href={verificationLink} className="text-blue-600">
               {verificationLink}
             </a>
           </Text>

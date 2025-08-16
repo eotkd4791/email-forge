@@ -11,8 +11,8 @@ const DiscountEvent = ({ name, eventLink }: DiscountEventProps) => (
     <Head />
     <Preview>{name}님을 위한 특별 할인 이벤트!</Preview>
     <Tailwind>
-      <Body className="bg-white my-auto mx-auto font-sans">
-        <Container className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] w-[465px]">
+      <Body className="bg-white my-auto mx-auto font-sans px-[10px]">
+        <Container className="border border-solid border-[#eaeaea] my-[40px] mx-auto p-[20px] w-full max-w-[465px]">
           <Heading className="text-black text-[24px] font-normal text-center p-0 my-[30px] mx-0">
             ✨ {name}님, 특별한 소식이 있어요! ✨
           </Heading>
@@ -29,7 +29,7 @@ const DiscountEvent = ({ name, eventLink }: DiscountEventProps) => (
           <Text className="text-black text-[14px] leading-[24px]">
             버튼이 작동하지 않으면, 다음 링크를 클릭하세요.
             <br />
-            <a href={eventLink} className="text-blue-600 no-underline">
+            <a href={eventLink} className="text-blue-600">
               {eventLink}
             </a>
           </Text>
