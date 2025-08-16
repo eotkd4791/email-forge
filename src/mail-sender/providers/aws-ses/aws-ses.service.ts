@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { type Config } from '../../../config/config.schema';
 import { MailSender, MailSenderParams } from '../mail-sender.interface';
+import { AWSSESError } from './AWSSESError';
 
 @Injectable()
 export class AWSSESService implements MailSender {
@@ -42,8 +43,10 @@ export class AWSSESService implements MailSender {
       );
       return response;
     } catch (error) {
-      console.error('Failed to send email:', error);
-      throw error;
+      console.error('이메일 발송 실패:', error);
+      if (error instanceof Error) {
+        throw new AWSSESError(error.message);
+      }
     }
   }
 }
