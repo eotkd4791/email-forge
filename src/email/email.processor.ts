@@ -8,6 +8,7 @@ import { type MailSender } from '../mail-sender/providers/mail-sender.interface'
 import WelcomeEmail from '../templates/WelcomeEmail';
 import DiscountEvent from '../templates/DiscountEvent';
 import EmailVerification from '../templates/EmailVerification';
+import IdentityVerificationExpired from '../templates/IdentityVerificationExpired';
 
 @Processor('email')
 export class EmailProcessor {
@@ -51,6 +52,24 @@ export class EmailProcessor {
     const { to, name, subject, verificationLink } = job.data;
     const html = await renderEmail({
       template: EmailVerification,
+      props: { name, verificationLink },
+    });
+
+    await this.mailSender.sendEmail({
+      to,
+      subject,
+      html,
+      sender: this.senderEmail,
+    });
+  }
+
+  @Process('sendIdentityVerificationExpired')
+  async handleIdentityVerificationExpired(
+    job: Job<{ to: string; name: string; subject: string; verificationLink: string }>,
+  ) {
+    const { to, name, subject, verificationLink } = job.data;
+    const html = await renderEmail({
+      template: IdentityVerificationExpired,
       props: { name, verificationLink },
     });
 

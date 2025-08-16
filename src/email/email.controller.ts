@@ -2,6 +2,7 @@ import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
 import { EmailService } from './email.service';
 import { SendDiscountEventDto } from './dto/send-discount-event.dto';
 import { SendEmailVerificationDto } from './dto/send-email-verification.dto';
+import { SendIdentityVerificationExpiredDto } from './dto/send-identity-verification-expired.dto';
 
 @Controller('email')
 export class EmailController {
@@ -26,5 +27,12 @@ export class EmailController {
   async sendEmailVerification(@Body() dto: SendEmailVerificationDto) {
     await this.emailService.enqueueEmailVerification(dto);
     return { success: true, message: 'Verification email has been queued.' };
+  }
+
+  @HttpCode(HttpStatus.ACCEPTED)
+  @Post('identity-verification-expired')
+  async sendIdentityVerificationExpired(@Body() dto: SendIdentityVerificationExpiredDto) {
+    await this.emailService.enqueueIdentityVerificationExpired(dto);
+    return { success: true, message: 'Identity verification expired email has been queued.' };
   }
 }

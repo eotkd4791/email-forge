@@ -3,6 +3,7 @@ import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bullmq';
 import { SendDiscountEventDto } from './dto/send-discount-event.dto';
 import { SendEmailVerificationDto } from './dto/send-email-verification.dto';
+import { SendIdentityVerificationExpiredDto } from './dto/send-identity-verification-expired.dto';
 
 @Injectable()
 export class EmailService {
@@ -27,6 +28,15 @@ export class EmailService {
 
   async enqueueEmailVerification(dto: SendEmailVerificationDto) {
     await this.emailQueue.add('sendEmailVerification', {
+      to: dto.email,
+      name: dto.name,
+      subject: dto.subject,
+      verificationLink: dto.verificationLink,
+    });
+  }
+
+  async enqueueIdentityVerificationExpired(dto: SendIdentityVerificationExpiredDto) {
+    await this.emailQueue.add('sendIdentityVerificationExpired', {
       to: dto.email,
       name: dto.name,
       subject: dto.subject,
