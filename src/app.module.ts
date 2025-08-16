@@ -12,10 +12,7 @@ import { configSchema } from './config/config.schema';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      validate: config => {
-        const validatedConfig = configSchema.parse(config);
-        return validatedConfig;
-      },
+      validate: config => configSchema.parse(config),
     }),
     QueueModule,
     EmailModule,
