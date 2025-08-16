@@ -10,10 +10,6 @@ import { SendPrivacyPolicyUpdateDto } from './dto/send-privacy-policy-update.dto
 export class EmailService {
   constructor(@InjectQueue('email') private emailQueue: Queue) {}
 
-  async enqueueWelcomeEmail(to: string, name: string, subject: string) {
-    await this.emailQueue.add('sendWelcome', { to, name, subject });
-  }
-
   async enqueueDiscountEventEmails(dto: SendDiscountEventDto) {
     const jobs = dto.users.map(user => ({
       name: 'sendDiscountEvent',

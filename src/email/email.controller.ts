@@ -10,13 +10,6 @@ export class EmailController {
   constructor(private readonly emailService: EmailService) {}
 
   @HttpCode(HttpStatus.ACCEPTED)
-  @Post('welcome')
-  async sendWelcomeEmail(@Body() { to, name, subject }: { to: string; name: string; subject: string }) {
-    await this.emailService.enqueueWelcomeEmail(to, name, subject);
-    return { success: true, message: 'Welcome email has been queued.' };
-  }
-
-  @HttpCode(HttpStatus.ACCEPTED)
   @Post('discount-event')
   async sendDiscountEvent(@Body() dto: SendDiscountEventDto) {
     await this.emailService.enqueueDiscountEventEmails(dto);
