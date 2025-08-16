@@ -19,7 +19,7 @@ export class EmailService {
   }
 
   async enqueueEmailVerification({ email, name, subject, verificationLink }: SendEmailVerificationDto) {
-    await this.emailQueue.add('sendEmailVerification', { to: email, name, subject, verificationLink });
+    await this.emailQueue.add('sendEmailVerification', { to: email, name, subject, verificationLink }, { priority: 1 });
   }
 
   async enqueueIdentityVerificationExpired({
@@ -28,7 +28,11 @@ export class EmailService {
     subject,
     verificationLink,
   }: SendIdentityVerificationExpiredDto) {
-    await this.emailQueue.add('sendIdentityVerificationExpired', { to: email, name, subject, verificationLink });
+    await this.emailQueue.add(
+      'sendIdentityVerificationExpired',
+      { to: email, name, subject, verificationLink },
+      { priority: 1 },
+    );
   }
 
   async enqueuePrivacyPolicyUpdateEmails({ users, subject, policyLink }: SendPrivacyPolicyUpdateDto) {
