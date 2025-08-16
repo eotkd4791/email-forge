@@ -4,7 +4,7 @@ export const configSchema = z
   .object({
     PORT: z.coerce.number().default(3000),
     EMAIL_PROVIDER: z.enum(['AWS_SES', 'RESEND', 'SENDGRID']),
-    SENDER_EMAIL: z.string().email(),
+    SENDER_EMAIL: z.email(),
     AWS_REGION: z.string().optional(),
     AWS_ACCESS_KEY_ID: z.string().optional(),
     AWS_SECRET_ACCESS_KEY: z.string().optional(),
