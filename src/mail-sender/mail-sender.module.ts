@@ -27,7 +27,6 @@ import { SendGridService } from './providers/sendgrid/sendgrid.service';
           case 'SENDGRID':
             return sendGridService;
           default:
-            // 기본값으로 SES를 사용하거나, 에러를 던질 수 있습니다.
             return awsSesService;
         }
       },
