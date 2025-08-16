@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bullmq';
+import { SendDiscountEventDto } from './dto/send-discount-event.dto';
 
 @Injectable()
 export class EmailService {
@@ -8,5 +9,18 @@ export class EmailService {
 
   async enqueueWelcomeEmail(to: string, name: string, subject: string) {
     await this.emailQueue.add('sendWelcome', { to, name, subject });
+  }
+
+  async enqueueDiscountEventEmails(dto: SendDiscountEventDto) {
+    const jobs = dto.users.map(user => ({
+      name: 'sendDiscountEvent',
+      data: {
+        to: user.email,
+        name: user.name,
+        subject: dto.subject,
+        eventLink: dto.eventLink,
+      },
+    }));
+    await this.emailQueue.addBulk(jobs);
   }
 }

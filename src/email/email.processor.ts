@@ -6,6 +6,7 @@ import { type Config } from '../config/config.schema';
 import { renderEmail } from '../libs/email-renderer';
 import { type MailSender } from '../mail-sender/providers/mail-sender.interface';
 import WelcomeEmail from '../templates/WelcomeEmail';
+import DiscountEvent from '../templates/DiscountEvent';
 
 @Processor('email')
 export class EmailProcessor {
@@ -22,6 +23,19 @@ export class EmailProcessor {
   async handleWelcomeEmail(job: Job<{ to: string; name: string; subject: string }>) {
     const { to, name, subject } = job.data;
     const html = await renderEmail({ template: WelcomeEmail, props: { name } });
+
+    await this.mailSender.sendEmail({
+      to,
+      subject,
+      html,
+      sender: this.senderEmail,
+    });
+  }
+
+  @Process('sendDiscountEvent')
+  async handleDiscountEventEmail(job: Job<{ to: string; name: string; subject: string; eventLink: string }>) {
+    const { to, name, subject, eventLink } = job.data;
+    const html = await renderEmail({ template: DiscountEvent, props: { name, eventLink } });
 
     await this.mailSender.sendEmail({
       to,
