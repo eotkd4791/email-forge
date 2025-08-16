@@ -1,16 +1,22 @@
 import { SendEmailCommand, SESClient } from '@aws-sdk/client-ses';
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { type Config } from '../../../config/config.schema';
 import { MailSender, MailSenderParams } from '../mail-sender.interface';
 
 @Injectable()
 export class AWSSESService implements MailSender {
-  private readonly client = new SESClient({
-    region: process.env.AWS_REGION,
-    credentials: {
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
-    },
-  });
+  private readonly client: SESClient;
+
+  constructor(private readonly configService: ConfigService<Config>) {
+    this.client = new SESClient({
+      region: this.configService.get('AWS_REGION', { infer: true }),
+      credentials: {
+        accessKeyId: this.configService.get('AWS_ACCESS_KEY_ID', { infer: true })!,
+        secretAccessKey: this.configService.get('AWS_SECRET_ACCESS_KEY', { infer: true })!,
+      },
+    });
+  }
 
   async sendEmail({ to, subject, html, sender }: MailSenderParams) {
     try {

@@ -1,12 +1,18 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Resend } from 'resend';
+import { type Config } from '../../../config/config.schema';
 import { MailSender, MailSenderParams } from '../mail-sender.interface';
 import { ResendError } from './ResendError';
 
 @Injectable()
 export class ResendService implements MailSender {
-  private readonly resend = new Resend(process.env.RESEND_API_KEY);
+  private readonly resend: Resend;
   private readonly logger = new Logger(ResendService.name);
+
+  constructor(private readonly configService: ConfigService<Config>) {
+    this.resend = new Resend(this.configService.get('RESEND_API_KEY', { infer: true }));
+  }
 
   async sendEmail({ to, subject, html, sender }: MailSenderParams) {
     try {

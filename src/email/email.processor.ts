@@ -1,13 +1,22 @@
 import { Processor, Process } from '@nestjs/bull';
-import { Job } from 'bullmq';
-import { renderEmail } from '../libs/email-renderer';
-import WelcomeEmail from '../templates/WelcomeEmail';
-import { type MailSender } from '../mail-sender/providers/mail-sender.interface';
 import { Inject } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { Job } from 'bullmq';
+import { type Config } from '../config/config.schema';
+import { renderEmail } from '../libs/email-renderer';
+import { type MailSender } from '../mail-sender/providers/mail-sender.interface';
+import WelcomeEmail from '../templates/WelcomeEmail';
 
 @Processor('email')
 export class EmailProcessor {
-  constructor(@Inject('MailSender') private readonly mailSender: MailSender) {}
+  private readonly senderEmail: string;
+
+  constructor(
+    @Inject('MailSender') private readonly mailSender: MailSender,
+    private readonly configService: ConfigService<Config>,
+  ) {
+    this.senderEmail = this.configService.get('SENDER_EMAIL', { infer: true }) as string;
+  }
 
   @Process('sendWelcome')
   async handleWelcomeEmail(job: Job<{ to: string; name: string; subject: string }>) {
@@ -18,7 +27,7 @@ export class EmailProcessor {
       to,
       subject,
       html,
-      sender: process.env.SENDER_EMAIL!,
+      sender: this.senderEmail,
     });
   }
 }
