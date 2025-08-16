@@ -1,6 +1,6 @@
 import { Head, Heading, Hr, Link, Preview, Section, Text } from '@react-email/components';
-import { Button } from './Button';
-import { Layout } from './EmailLayout';
+import { Button } from './components/Button';
+import { Layout } from './components/EmailLayout';
 
 interface IdentityVerificationExpiredProps {
   name: string;
