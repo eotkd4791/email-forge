@@ -22,7 +22,7 @@ export class SendGridService implements MailSender {
       });
       return response;
     } catch (error) {
-      this.logger.error('Failed to send email:', error);
+      this.logger.error('이메일 발송에 실패했습니다:', error);
       throw error;
     }
   }

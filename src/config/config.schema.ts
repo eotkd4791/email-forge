@@ -19,7 +19,7 @@ export const configSchema = z
       return true;
     },
     {
-      message: 'AWS keys and region are required when email provider is SES',
+      message: '이메일 프로바이더가 SES일 경우, AWS 관련 키와 region이 없습니다.',
       path: ['AWS_REGION', 'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_KEY'],
     },
   )
@@ -30,7 +30,7 @@ export const configSchema = z
       }
       return true;
     },
-    { message: 'Resend API key is required', path: ['RESEND_API_KEY'] },
+    { message: 'Resend API 키가 없습니다.', path: ['RESEND_API_KEY'] },
   )
   .refine(
     data => {
@@ -39,7 +39,7 @@ export const configSchema = z
       }
       return true;
     },
-    { message: 'SendGrid API key is required', path: ['SENDGRID_API_KEY'] },
+    { message: 'SendGrid API 키가 없습니다.', path: ['SENDGRID_API_KEY'] },
   );
 
 export type Config = z.infer<typeof configSchema>;
