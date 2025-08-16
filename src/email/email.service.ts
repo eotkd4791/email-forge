@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bullmq';
 import { SendDiscountEventDto } from './dto/send-discount-event.dto';
+import { SendEmailVerificationDto } from './dto/send-email-verification.dto';
 
 @Injectable()
 export class EmailService {
@@ -22,5 +23,14 @@ export class EmailService {
       },
     }));
     await this.emailQueue.addBulk(jobs);
+  }
+
+  async enqueueEmailVerification(dto: SendEmailVerificationDto) {
+    await this.emailQueue.add('sendEmailVerification', {
+      to: dto.email,
+      name: dto.name,
+      subject: dto.subject,
+      verificationLink: dto.verificationLink,
+    });
   }
 }

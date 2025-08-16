@@ -7,6 +7,7 @@ import { renderEmail } from '../libs/email-renderer';
 import { type MailSender } from '../mail-sender/providers/mail-sender.interface';
 import WelcomeEmail from '../templates/WelcomeEmail';
 import DiscountEvent from '../templates/DiscountEvent';
+import EmailVerification from '../templates/EmailVerification';
 
 @Processor('email')
 export class EmailProcessor {
@@ -36,6 +37,22 @@ export class EmailProcessor {
   async handleDiscountEventEmail(job: Job<{ to: string; name: string; subject: string; eventLink: string }>) {
     const { to, name, subject, eventLink } = job.data;
     const html = await renderEmail({ template: DiscountEvent, props: { name, eventLink } });
+
+    await this.mailSender.sendEmail({
+      to,
+      subject,
+      html,
+      sender: this.senderEmail,
+    });
+  }
+
+  @Process('sendEmailVerification')
+  async handleEmailVerification(job: Job<{ to: string; name: string; subject: string; verificationLink: string }>) {
+    const { to, name, subject, verificationLink } = job.data;
+    const html = await renderEmail({
+      template: EmailVerification,
+      props: { name, verificationLink },
+    });
 
     await this.mailSender.sendEmail({
       to,
