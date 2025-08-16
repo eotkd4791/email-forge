@@ -1,4 +1,4 @@
-import { Head, Heading, Hr, Preview, Section, Text } from '@react-email/components';
+import { Head, Heading, Hr, Link, Preview, Section, Text } from '@react-email/components';
 import { Button } from './Button';
 import { Layout } from './EmailLayout';
 
@@ -22,9 +22,9 @@ const EmailVerification = ({ name, verificationLink }: EmailVerificationProps) =
     <Text className="text-black text-[14px] leading-[24px]">
       또는 다음 링크를 클릭하세요.
       <br />
-      <a href={verificationLink} className="text-blue-600">
+      <Link href={verificationLink} className="text-blue-600">
         {verificationLink}
-      </a>
+      </Link>
     </Text>
     <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
     <Text className="text-[#666666] text-[12px] leading-[24px]">
