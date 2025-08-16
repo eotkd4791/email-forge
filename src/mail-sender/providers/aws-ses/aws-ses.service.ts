@@ -4,7 +4,13 @@ import { MailSender, MailSenderParams } from '../mail-sender.interface';
 
 @Injectable()
 export class AWSSESService implements MailSender {
-  private readonly client = new SESClient({ region: process.env.AWS_REGION });
+  private readonly client = new SESClient({
+    region: process.env.AWS_REGION,
+    credentials: {
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+    },
+  });
 
   async sendEmail({ to, subject, html, sender }: MailSenderParams) {
     try {

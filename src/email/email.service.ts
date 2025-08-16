@@ -6,7 +6,7 @@ import { Queue } from 'bullmq';
 export class EmailService {
   constructor(@InjectQueue('email') private emailQueue: Queue) {}
 
-  async enqueueWelcomeEmail(to: string, name: string) {
-    await this.emailQueue.add('sendWelcome', { to, name });
+  async enqueueWelcomeEmail(to: string, name: string, subject: string) {
+    await this.emailQueue.add('sendWelcome', { to, name, subject });
   }
 }
