@@ -2,13 +2,13 @@ import { Processor, Process } from '@nestjs/bull';
 import { Inject } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Job } from 'bullmq';
-import { type Config } from '../config/config.schema';
-import { renderEmail } from '../libs/email-renderer';
-import { type MailSender } from '../mail-sender/providers/mail-sender.interface';
-import DiscountEvent from '../templates/DiscountEvent';
-import EmailVerification from '../templates/EmailVerification';
-import IdentityVerificationExpired from '../templates/IdentityVerificationExpired';
-import PrivacyPolicyUpdate from '../templates/PrivacyPolicyUpdate';
+import { type Config } from '@/config/config.schema';
+import { renderEmail } from '@/libs/email-renderer';
+import { type MailSender } from '@/mail-sender/providers/mail-sender.interface';
+import DiscountEvent from '@/templates/DiscountEvent';
+import EmailVerification from '@/templates/EmailVerification';
+import IdentityVerificationExpired from '@/templates/IdentityVerificationExpired';
+import PrivacyPolicyUpdate from '@/templates/PrivacyPolicyUpdate';
 
 @Processor('email')
 export class EmailProcessor {

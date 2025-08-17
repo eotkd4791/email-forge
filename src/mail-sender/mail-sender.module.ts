@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { type Config } from '../config/config.schema';
-import { AWSSESService } from './providers/aws-ses/aws-ses.service';
-import { ResendService } from './providers/resend/resend.service';
-import { SendGridService } from './providers/sendgrid/sendgrid.service';
+import { type Config } from '@/config/config.schema';
+import { AWSSESService } from '@/mail-sender/providers/aws-ses/aws-ses.service';
+import { ResendService } from '@/mail-sender/providers/resend/resend.service';
+import { SendGridService } from '@/mail-sender/providers/sendgrid/sendgrid.service';
 
 @Module({
   providers: [

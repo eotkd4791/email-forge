@@ -1,6 +1,6 @@
 import { IsArray, IsNotEmpty, IsString, IsUrl, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
-import { UserDto } from './user.dto';
+import { UserDto } from '@/email/dto/user.dto';
 
 export class SendPrivacyPolicyUpdateDto {
   @IsArray({ message: '사용자 목록이 배열이어야 합니다.' })

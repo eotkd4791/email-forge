@@ -1,6 +1,6 @@
 import { IsArray, IsNotEmpty, IsString, IsUrl, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
-import { UserDto } from './user.dto';
+import { UserDto } from '@/email/dto/user.dto';
 
 export class SendDiscountEventDto {
   @IsArray({ message: '사용자 목록 형식이 올바르지 않습니다.' })

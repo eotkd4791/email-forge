@@ -1,10 +1,10 @@
 import { Controller, Post, Body, HttpCode, HttpStatus, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
-import { EmailService } from './email.service';
-import { SendDiscountEventDto } from './dto/send-discount-event.dto';
-import { SendEmailVerificationDto } from './dto/send-email-verification.dto';
-import { SendIdentityVerificationExpiredDto } from './dto/send-identity-verification-expired.dto';
-import { SendPrivacyPolicyUpdateDto } from './dto/send-privacy-policy-update.dto';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { EmailService } from '@/email/email.service';
+import { SendDiscountEventDto } from '@/email/dto/send-discount-event.dto';
+import { SendEmailVerificationDto } from '@/email/dto/send-email-verification.dto';
+import { SendIdentityVerificationExpiredDto } from '@/email/dto/send-identity-verification-expired.dto';
+import { SendPrivacyPolicyUpdateDto } from '@/email/dto/send-privacy-policy-update.dto';
+import { AuthGuard } from '@/auth/auth.guard';
 
 @UseGuards(AuthGuard)
 @UsePipes(new ValidationPipe())

@@ -6,8 +6,8 @@ import {
   makeGaugeProvider,
   makeHistogramProvider,
 } from '@willsoto/nestjs-prometheus';
-import { MetricsInterceptor } from './metrics.interceptor';
-import { MetricsProvider } from './metrics.provider';
+import { MetricsInterceptor } from '@/metrics/metrics.interceptor';
+import { MetricsProvider } from '@/metrics/metrics.provider';
 
 @Module({
   imports: [

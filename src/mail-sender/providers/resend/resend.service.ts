@@ -1,8 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Resend } from 'resend';
-import { type Config } from '../../../config/config.schema';
-import { MailSender, MailSenderParams } from '../mail-sender.interface';
+import { type Config } from '@/config/config.schema';
+import { MailSender, MailSenderParams } from '@/mail-sender/providers/mail-sender.interface';
 import { ResendError } from './ResendError';
 
 @Injectable()

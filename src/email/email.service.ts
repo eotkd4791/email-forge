@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bullmq';
-import { SendDiscountEventDto } from './dto/send-discount-event.dto';
-import { SendEmailVerificationDto } from './dto/send-email-verification.dto';
-import { SendIdentityVerificationExpiredDto } from './dto/send-identity-verification-expired.dto';
-import { SendPrivacyPolicyUpdateDto } from './dto/send-privacy-policy-update.dto';
+import { SendDiscountEventDto } from '@/email/dto/send-discount-event.dto';
+import { SendEmailVerificationDto } from '@/email/dto/send-email-verification.dto';
+import { SendIdentityVerificationExpiredDto } from '@/email/dto/send-identity-verification-expired.dto';
+import { SendPrivacyPolicyUpdateDto } from '@/email/dto/send-privacy-policy-update.dto';
 
 @Injectable()
 export class EmailService {

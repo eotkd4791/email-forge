@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
-import { type Config } from '../config/config.schema';
+import { type Config } from '@/config/config.schema';
 import { catchError, map } from 'rxjs';
 
 @Injectable()

@@ -1,9 +1,9 @@
 import { SendEmailCommand, SESClient } from '@aws-sdk/client-ses';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { type Config } from '../../../config/config.schema';
-import { MailSender, MailSenderParams } from '../mail-sender.interface';
-import { AWSSESError } from './AWSSESError';
+import { type Config } from '@/config/config.schema';
+import { MailSender, MailSenderParams } from '@/mail-sender/providers/mail-sender.interface';
+import { AWSSESError } from '@/mail-sender/providers/aws-ses/AWSSESError';
 
 @Injectable()
 export class AWSSESService implements MailSender {

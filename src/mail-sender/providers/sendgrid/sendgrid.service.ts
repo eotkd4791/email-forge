@@ -1,8 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { MailSender, MailSenderParams } from '../mail-sender.interface';
+import { MailSender, MailSenderParams } from '@/mail-sender/providers/mail-sender.interface';
 import SendGrid from '@sendgrid/mail';
 import { ConfigService } from '@nestjs/config';
-import { type Config } from '../../../config/config.schema';
+import { type Config } from '@/config/config.schema';
 
 @Injectable()
 export class SendGridService implements MailSender {
