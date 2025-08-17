@@ -1,10 +1,12 @@
-import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, HttpStatus, UseGuards } from '@nestjs/common';
 import { EmailService } from './email.service';
 import { SendDiscountEventDto } from './dto/send-discount-event.dto';
 import { SendEmailVerificationDto } from './dto/send-email-verification.dto';
 import { SendIdentityVerificationExpiredDto } from './dto/send-identity-verification-expired.dto';
 import { SendPrivacyPolicyUpdateDto } from './dto/send-privacy-policy-update.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('email')
 export class EmailController {
   constructor(private readonly emailService: EmailService) {}
