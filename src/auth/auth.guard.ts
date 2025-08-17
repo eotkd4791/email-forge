@@ -9,7 +9,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): Observable<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
-    const [, token] = request.headers.authorization?.split(' ') || [];
+    const token = request.headers.authorization;
 
     if (!token) {
       throw new UnauthorizedException('인증 토큰이 없습니다.');
@@ -17,7 +17,8 @@ export class AuthGuard implements CanActivate {
 
     return this.authService.validateToken(token).pipe(
       map(({ isValid }) => isValid),
-      catchError(() => {
+      catchError(error => {
+        console.error(error);
         throw new UnauthorizedException('유효하지 않은 토큰입니다.');
       }),
     );
