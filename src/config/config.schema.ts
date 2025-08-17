@@ -10,6 +10,7 @@ export const configSchema = z
     AWS_SECRET_ACCESS_KEY: z.string().optional(),
     RESEND_API_KEY: z.string().optional(),
     SENDGRID_API_KEY: z.string().optional(),
+    AUTH_SERVER_URL: z.url(),
   })
   .refine(
     data => {
