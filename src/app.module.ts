@@ -10,9 +10,38 @@ import { MetricsModule } from '@/metrics/metrics.module';
 import { configSchema } from '@/config/config.schema';
 import { AuthModule } from '@/auth/auth.module';
 import { AuthGuard } from '@/auth/auth.guard';
+import { LoggerModule } from 'nestjs-pino';
 
 @Module({
   imports: [
+    LoggerModule.forRoot({
+      pinoHttp: {
+        transport:
+          process.env.NODE_ENV === 'production'
+            ? undefined
+            : {
+                target: 'pino-pretty',
+                options: {
+                  colorize: true,
+                  singleLine: true,
+                  ignore: 'pid,hostname',
+                  translateTime: 'SYS:standard',
+                },
+              },
+        autoLogging: true,
+        serializers: {
+          req(req) {
+            return { id: req.id, method: req.method, url: req.url };
+          },
+          res(res) {
+            return { statusCode: res.statusCode };
+          },
+        },
+        customProps: req => ({
+          requestId: req.id,
+        }),
+      },
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
       validate: config => configSchema.parse(config),
