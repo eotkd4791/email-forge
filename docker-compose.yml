@@ -3,7 +3,7 @@ services:
     build: .
     container_name: email-forge-api
     ports:
-      - '3000:3000'
+      - '127.0.0.1:3000:3000'
     restart: unless-stopped
     env_file:
       - .env
@@ -14,7 +14,7 @@ services:
     image: prom/prometheus:v2.45.0
     container_name: prometheus-dev
     ports:
-      - '9090:9090'
+      - '127.0.0.1:9090:9090'
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     depends_on:
@@ -27,7 +27,7 @@ services:
     image: grafana/grafana:latest
     container_name: grafana-dev
     ports:
-      - '3001:3000'
+      - '127.0.0.1:3001:3001'
     volumes:
       - grafana-data:/var/lib/grafana
       - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
@@ -39,13 +39,13 @@ services:
     image: redis:7
     container_name: redis-dev
     ports:
-      - '6379:6379'
+      - '127.0.0.1:6379:6379'
 
   node-exporter:
     image: prom/node-exporter
     container_name: node-exporter-dev
     ports:
-      - '9100:9100'
+      - '127.0.0.1:9100:9100'
 
   redis-exporter:
     image: oliver006/redis_exporter
